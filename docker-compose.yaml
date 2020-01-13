@@ -1,0 +1,16 @@
+version: '3'
+services:
+    nginx:
+        build: .docker/nginx
+        container_name: symfony_nginx
+        ports:
+            - '8080:80'
+        links:
+            - php
+        volumes:
+            - ./logs/nginx/:/var/log/nginx:cached
+    php:
+        build: .docker/php
+        container_name: symfony_php
+        volumes:
+          - .:/var/www/html/data-streaming-web-service
