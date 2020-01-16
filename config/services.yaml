@@ -23,5 +23,37 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Service\JsonParser:
+      public: true
+
+    # providerX:
+    #   class: App\Adapter\ProviderX
+    #   public: true
+      
+    App\Adapter\ProviderX:
+      public: true
+      arguments:
+        $filePath: '%env(PROVIDER_X_JSON_PATH)%'
+
+    App\Adapter\ProviderY:
+      public: true
+      arguments:
+        $filePath: '%env(PROVIDER_Y_JSON_PATH)%'
+
+    App\Repository\UserRepository:
+      arguments:
+        $provider: '@App\Adapter\ProviderInterface'
+      public: true
+
+    App\Builder\Director:
+      public: true
+
+    App\Adapter\ProviderInterface: ~
+    App\Adapter\ProviderInterface $providerX : '@App\Adapter\ProviderX'
+    App\Adapter\ProviderInterface $providerY : '@App\Adapter\ProviderY'
+
+    App\Service\UserService:
+      public: true
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
